@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: basic-website
+spec:
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/zebcarnell/musical-potato.git'
+    contextDir: basic-website/code/
+    type: Git
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'php:latest'
+        namespace: openshift
+      env: []
+  triggers:
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange
